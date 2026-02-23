@@ -1,16 +1,19 @@
-import { AppointmentService, AppointmentServiceCreationAttributes } from '../models/AppointmentService';
+import {
+  AppointmentService,
+  AppointmentServiceCreationAttributes,
+} from '../models/AppointmentService';
 
 export class AppointmentServiceRepository {
   async findAll(): Promise<AppointmentService[]> {
     return AppointmentService.findAll({
-      where: { isRemove: false },
+      where: { isRemove: false, isPublic: true },
       order: [['order', 'ASC']],
     });
   }
 
   async findById(id: string): Promise<AppointmentService | null> {
     return AppointmentService.findOne({
-      where: { id, isRemove: false },
+      where: { id, isRemove: false, isPublic: true },
     });
   }
 
@@ -18,7 +21,10 @@ export class AppointmentServiceRepository {
     return AppointmentService.create(data);
   }
 
-  async update(id: string, data: Partial<AppointmentServiceCreationAttributes>): Promise<AppointmentService | null> {
+  async update(
+    id: string,
+    data: Partial<AppointmentServiceCreationAttributes>,
+  ): Promise<AppointmentService | null> {
     const service = await AppointmentService.findOne({
       where: { id, isRemove: false },
     });
