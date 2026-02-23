@@ -15,6 +15,7 @@
     "test": "jest --forceExit --detectOpenHandles",
     "test:unit": "jest tests/unit --forceExit",
     "test:integration": "jest tests/integration --forceExit --detectOpenHandles",
+    "verify:dod": "bash scripts/generate-dod-report.sh",
     "lint": "eslint 'src/**/*.ts' 'tests/**/*.ts'",
     "lint:fix": "eslint 'src/**/*.ts' 'tests/**/*.ts' --fix",
     "format": "prettier --write 'src/**/*.ts' 'tests/**/*.ts'"

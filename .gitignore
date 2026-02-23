@@ -5,3 +5,5 @@ dist/
 *.sqlite3
 coverage/
 .DS_Store
+dod-report-*.zip
+evidence/
