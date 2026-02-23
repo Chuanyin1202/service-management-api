@@ -8,13 +8,15 @@ export async function authRequired(ctx: Context, next: Next) {
     ctx.throw(401, 'Authentication required', { code: 'AUTH_REQUIRED' });
   }
 
-  const token = authHeader.substring(7);
+  const token = authHeader!.substring(7);
 
+  let payload;
   try {
-    const payload = verifyToken(token);
-    ctx.state.user = payload;
-    await next();
+    payload = verifyToken(token);
   } catch {
     ctx.throw(401, 'Invalid or expired token', { code: 'INVALID_TOKEN' });
   }
+
+  ctx.state.user = payload;
+  await next();
 }
