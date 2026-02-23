@@ -34,9 +34,11 @@ export async function startApp() {
   // Start Moleculer broker
   await broker.start();
 
-  // Sync database (for test/dev; use migrations in production)
+  // Sync database
   if (appConfig.nodeEnv === 'test') {
     await sequelize.sync({ force: true });
+  } else {
+    await sequelize.sync();
   }
 
   // Start HTTP server
