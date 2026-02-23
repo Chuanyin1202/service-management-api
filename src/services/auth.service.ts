@@ -1,4 +1,4 @@
-import { ServiceSchema, Context } from 'moleculer';
+import { ServiceSchema, Context, Errors } from 'moleculer';
 import { UserRepository } from '../repositories/UserRepository';
 import { hashPassword, comparePassword } from '../utils/password';
 import { signToken } from '../utils/jwt';
@@ -14,9 +14,7 @@ const AuthService: ServiceSchema = {
 
       const existing = await userRepository.findByEmail(email);
       if (existing) {
-        const error = new Error('Email already registered') as Error & { code: number };
-        error.code = 409;
-        throw error;
+        throw new Errors.MoleculerClientError('Email already registered', 409, 'CONFLICT');
       }
 
       const hashedPassword = await hashPassword(password);
@@ -43,16 +41,12 @@ const AuthService: ServiceSchema = {
 
       const user = await userRepository.findByEmail(email);
       if (!user) {
-        const error = new Error('Invalid email or password') as Error & { code: number };
-        error.code = 401;
-        throw error;
+        throw new Errors.MoleculerClientError('Invalid email or password', 401, 'UNAUTHORIZED');
       }
 
       const isValid = await comparePassword(password, user.password);
       if (!isValid) {
-        const error = new Error('Invalid email or password') as Error & { code: number };
-        error.code = 401;
-        throw error;
+        throw new Errors.MoleculerClientError('Invalid email or password', 401, 'UNAUTHORIZED');
       }
 
       const token = signToken({ userId: user.id, email: user.email });

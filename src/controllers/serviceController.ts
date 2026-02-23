@@ -6,8 +6,7 @@ export async function listServices(ctx: Context) {
     const services = await broker.call('appointment.list');
     ctx.body = { data: services };
   } catch (err: any) {
-    const status = err.code || 500;
-    ctx.throw(typeof status === 'number' ? status : 500, err.message);
+    ctx.throw(err.code || 500, err.message);
   }
 }
 
@@ -16,8 +15,7 @@ export async function getService(ctx: Context) {
     const service = await broker.call('appointment.get', { id: ctx.params.id });
     ctx.body = { data: service };
   } catch (err: any) {
-    const status = err.code || 500;
-    ctx.throw(typeof status === 'number' ? status : 500, err.message);
+    ctx.throw(err.code || 500, err.message);
   }
 }
 
@@ -27,8 +25,7 @@ export async function createService(ctx: Context) {
     ctx.status = 201;
     ctx.body = { data: service };
   } catch (err: any) {
-    const status = err.code || 500;
-    ctx.throw(typeof status === 'number' ? status : 500, err.message);
+    ctx.throw(err.code || 500, err.message);
   }
 }
 
@@ -41,8 +38,7 @@ export async function updateService(ctx: Context) {
     });
     ctx.body = { data: service };
   } catch (err: any) {
-    const status = err.code || 500;
-    ctx.throw(typeof status === 'number' ? status : 500, err.message);
+    ctx.throw(err.code || 500, err.message);
   }
 }
 
@@ -51,7 +47,6 @@ export async function deleteService(ctx: Context) {
     const result = await broker.call('appointment.delete', { id: ctx.params.id });
     ctx.body = { data: result };
   } catch (err: any) {
-    const status = err.code || 500;
-    ctx.throw(typeof status === 'number' ? status : 500, err.message);
+    ctx.throw(err.code || 500, err.message);
   }
 }

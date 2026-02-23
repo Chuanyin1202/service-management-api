@@ -7,8 +7,7 @@ export async function register(ctx: Context) {
     ctx.status = 201;
     ctx.body = { data: result };
   } catch (err: any) {
-    const status = err.code || 500;
-    ctx.throw(typeof status === 'number' ? status : 500, err.message);
+    ctx.throw(err.code || 500, err.message);
   }
 }
 
@@ -18,7 +17,6 @@ export async function login(ctx: Context) {
     ctx.status = 200;
     ctx.body = { data: result };
   } catch (err: any) {
-    const status = err.code || 500;
-    ctx.throw(typeof status === 'number' ? status : 500, err.message);
+    ctx.throw(err.code || 500, err.message);
   }
 }

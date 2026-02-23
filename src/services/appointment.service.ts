@@ -1,4 +1,4 @@
-import { ServiceSchema, Context } from 'moleculer';
+import { ServiceSchema, Context, Errors } from 'moleculer';
 import { AppointmentServiceRepository } from '../repositories/AppointmentServiceRepository';
 
 const appointmentRepository = new AppointmentServiceRepository();
@@ -15,9 +15,7 @@ const AppointmentServiceDef: ServiceSchema = {
     async get(ctx: Context<{ id: string }>) {
       const service = await appointmentRepository.findById(ctx.params.id);
       if (!service) {
-        const error = new Error('Service not found') as Error & { code: number };
-        error.code = 404;
-        throw error;
+        throw new Errors.MoleculerClientError('Service not found', 404, 'NOT_FOUND');
       }
       return service;
     },
@@ -50,9 +48,7 @@ const AppointmentServiceDef: ServiceSchema = {
       const { id, ...data } = ctx.params;
       const service = await appointmentRepository.update(id, data);
       if (!service) {
-        const error = new Error('Service not found') as Error & { code: number };
-        error.code = 404;
-        throw error;
+        throw new Errors.MoleculerClientError('Service not found', 404, 'NOT_FOUND');
       }
       return service;
     },
@@ -60,9 +56,7 @@ const AppointmentServiceDef: ServiceSchema = {
     async delete(ctx: Context<{ id: string }>) {
       const success = await appointmentRepository.softDelete(ctx.params.id);
       if (!success) {
-        const error = new Error('Service not found') as Error & { code: number };
-        error.code = 404;
-        throw error;
+        throw new Errors.MoleculerClientError('Service not found', 404, 'NOT_FOUND');
       }
       return { message: 'Service deleted successfully' };
     },
