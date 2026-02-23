@@ -84,9 +84,9 @@ describe('Appointment Service', () => {
     });
 
     it('should throw for already-deleted service', async () => {
-      await expect(
-        broker.call('appointment.delete', { id: createdServiceId }),
-      ).rejects.toThrow('Service not found');
+      await expect(broker.call('appointment.delete', { id: createdServiceId })).rejects.toThrow(
+        'Service not found',
+      );
     });
   });
 });

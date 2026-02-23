@@ -21,9 +21,11 @@ export const updateServiceSchema = Joi.object({
   showTime: Joi.number().integer().min(0).allow(null).optional(),
   order: Joi.number().integer().min(0).optional(),
   isPublic: Joi.boolean().optional(),
-}).min(1).messages({
-  'object.min': 'At least one field must be provided for update',
-});
+})
+  .min(1)
+  .messages({
+    'object.min': 'At least one field must be provided for update',
+  });
 
 export const serviceIdSchema = Joi.object({
   id: Joi.string().uuid().required().messages({

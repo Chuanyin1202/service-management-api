@@ -14,8 +14,10 @@ export interface AppointmentServiceAttributes {
   updatedAt?: Date;
 }
 
-export interface AppointmentServiceCreationAttributes
-  extends Omit<AppointmentServiceAttributes, 'id' | 'order' | 'isRemove' | 'isPublic' | 'createdAt' | 'updatedAt'> {}
+export type AppointmentServiceCreationAttributes = Omit<
+  AppointmentServiceAttributes,
+  'id' | 'order' | 'isRemove' | 'isPublic' | 'createdAt' | 'updatedAt'
+>;
 
 export class AppointmentService
   extends Model<AppointmentServiceAttributes, AppointmentServiceCreationAttributes>

@@ -9,7 +9,7 @@ export interface UserAttributes {
   updatedAt?: Date;
 }
 
-export interface UserCreationAttributes extends Omit<UserAttributes, 'id' | 'createdAt' | 'updatedAt'> {}
+export type UserCreationAttributes = Omit<UserAttributes, 'id' | 'createdAt' | 'updatedAt'>;
 
 export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
   public id!: string;
