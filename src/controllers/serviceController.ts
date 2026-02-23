@@ -34,9 +34,10 @@ export async function createService(ctx: Context) {
 
 export async function updateService(ctx: Context) {
   try {
+    const body = ctx.request.body as Record<string, unknown>;
     const service = await broker.call('appointment.update', {
       id: ctx.params.id,
-      ...ctx.request.body,
+      ...body,
     });
     ctx.body = { data: service };
   } catch (err: any) {
